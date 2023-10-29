@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cj18n6km5l8ip"]
+
+[ext_resource type="Script" path="res://dice_combo_container.gd" id="1_ax3dk"]
+
+[node name="DiceComboContainer" type="ColorRect"]
+custom_minimum_size = Vector2(0, 30)
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_default_cursor_shape = 2
+color = Color(0.52549, 0.00392157, 0.831373, 0)
+script = ExtResource("1_ax3dk")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HFlowContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+text = "20 points"
+horizontal_alignment = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

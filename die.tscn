@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://midq3rvrnxje"]
+
+[ext_resource type="Script" path="res://die.gd" id="1_fecqj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aahgp"]
+load_path = "res://.godot/imported/normal_dice.png-e838cf6e5bdac22c59d96a92699adf15.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcvln"]
+atlas = SubResource("CompressedTexture2D_aahgp")
+region = Rect2(0, 0, 64, 64)
+
+[node name="Die" type="ColorRect"]
+custom_minimum_size = Vector2(30, 30)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(25, 25)
+script = ExtResource("1_fecqj")
+
+[node name="Border" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0, 0, 1)
+border_width = 2.0
+editor_only = false
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_wcvln")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Center" type="CenterContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 52.0
+offset_bottom = 52.0
+
+[node name="Label" type="Label" parent="Center"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "1"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjuehegtf3bhj"]
+
+[ext_resource type="Script" path="res://3d_dice_test.gd" id="1_0huv5"]
+[ext_resource type="PackedScene" uid="uid://do7lma11amsw7" path="res://magic_die.tscn" id="1_aitnr"]
+
+[node name="Ground" type="Node3D"]
+script = ExtResource("1_0huv5")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.780518, 0.625134, 0, -0.625134, 0.780518, 0, 2.45611, 3.74559)
+current = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_priority = 2.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(100, 1, 100)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.129556, 0)
+operation = 2
+size = Vector3(99, 1, 99)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0370623, 0.999313, 0, -0.999313, 0.0370623, 0, 2.80258, 0)
+
+[node name="Dice" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.261276, 0.130933, 0)
+
+[node name="MagicDie" parent="Dice" instance=ExtResource("1_aitnr")]
+
+[node name="MagicDie2" parent="Dice" instance=ExtResource("1_aitnr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.688823)
+
+[node name="MagicDie3" parent="Dice" instance=ExtResource("1_aitnr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.702165)
