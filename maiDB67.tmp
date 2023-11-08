@@ -1,0 +1,356 @@
+[gd_scene load_steps=14 format=3 uid="uid://blitgrm72xbb4"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_5o5gc"]
+[ext_resource type="FontFile" uid="uid://dohtogt5hwc3" path="res://graphics/MinimalPixel v2.ttf" id="1_5uec2"]
+[ext_resource type="Texture2D" uid="uid://bedn8yf2aod15" path="res://graphics/Custom Border and Panels Menu All Part/Border All 10.png" id="7_6g6lf"]
+[ext_resource type="Texture2D" uid="uid://cmf1c5jylny8h" path="res://graphics/table-tile.png" id="7_67ic4"]
+[ext_resource type="Texture2D" uid="uid://3ivmp8mriyoq" path="res://graphics/tumblr_pmexqzL8UA1s5y1z0o1_1280.png" id="8_yqrc3"]
+[ext_resource type="Texture2D" uid="uid://c8vbbs0gcq17m" path="res://graphics/Custom Border and Panels Menu All Part/Border All 2.png" id="10_j3gdm"]
+[ext_resource type="Texture2D" uid="uid://lj85p0hwjpua" path="res://graphics/table-patch.png" id="11_n4iyw"]
+[ext_resource type="Texture2D" uid="uid://c4ujknnkxgats" path="res://graphics/RPG_Icon_Set_x4.png" id="12_bjhyt"]
+[ext_resource type="Texture2D" uid="uid://bn5lhgdbioowd" path="res://graphics/Pixel UI pack 3/00.png" id="13_4us1d"]
+
+[sub_resource type="Theme" id="Theme_20tiw"]
+default_font = ExtResource("1_5uec2")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0gt8q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfa1s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hle3f"]
+atlas = ExtResource("12_bjhyt")
+region = Rect2(8, 712, 48, 47)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_20tiw")
+script = ExtResource("1_5o5gc")
+metadata/_edit_horizontal_guides_ = [-133.0]
+metadata/_edit_vertical_guides_ = [350.0, 16.0]
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_67ic4")
+stretch_mode = 1
+
+[node name="PlayerUI" type="NinePatchRect" parent="."]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(320, 240)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("10_j3gdm")
+region_rect = Rect2(320, 192, 64, 64)
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="PlayerUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DetailsBox" type="HBoxContainer" parent="PlayerUI/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="PlayerDetails" type="HBoxContainer" parent="PlayerUI/MarginContainer/VBox/DetailsBox"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="PlayerSpellbook" type="ScrollContainer" parent="PlayerUI/MarginContainer/VBox"]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="Spells" type="HBoxContainer" parent="PlayerUI/MarginContainer/VBox/PlayerSpellbook"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="EventUI" type="NinePatchRect" parent="."]
+texture_filter = 1
+custom_minimum_size = Vector2(320, 240)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0395833
+anchor_right = 1.0
+anchor_bottom = 0.352344
+offset_bottom = -0.200012
+grow_horizontal = 2
+texture = ExtResource("7_6g6lf")
+region_rect = Rect2(257, 321, 62, 62)
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="EventUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="DiceUI" type="NinePatchRect" parent="."]
+texture_filter = 1
+texture_repeat = 1
+custom_minimum_size = Vector2(320, 160)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.333
+anchor_right = 1.0
+anchor_bottom = 0.6
+offset_top = 14.256
+offset_bottom = 69.2
+grow_horizontal = 2
+grow_vertical = 2
+region_rect = Rect2(0, 0, 32, 32)
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="DiceCup" type="TextureRect" parent="DiceUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -73.0
+offset_right = 50.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_yqrc3")
+expand_mode = 4
+
+[node name="DiceTray" type="HFlowContainer" parent="DiceUI"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 16
+alignment = 1
+
+[node name="RollText" type="Label" parent="DiceUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.459
+anchor_top = 0.021121
+anchor_right = 0.542
+anchor_bottom = 0.183121
+offset_left = -0.200012
+offset_top = 2.0
+offset_right = 0.399963
+offset_bottom = 2.07999
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/line_spacing = 0
+text = "Roll 1/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RollButton" type="MarginContainer" parent="DiceUI"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.967462
+anchor_right = 0.5
+anchor_bottom = 0.967462
+offset_left = -125.0
+offset_top = -29.08
+offset_right = 125.0
+offset_bottom = 28.92
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="DiceUI/RollButton"]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("13_4us1d")
+region_rect = Rect2(64, 85, 48, 22)
+patch_margin_left = 6
+patch_margin_top = 7
+patch_margin_right = 6
+patch_margin_bottom = 7
+
+[node name="Button" type="Button" parent="DiceUI/RollButton/NinePatchRect"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0gt8q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_dfa1s")
+disabled = true
+text = "ROLL"
+
+[node name="SpellOptions" type="ColorRect" parent="DiceUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0196078, 0.0196078, 0.0196078, 0.784314)
+
+[node name="Title" type="Label" parent="DiceUI/SpellOptions"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.017
+anchor_right = 1.0
+anchor_bottom = 0.017
+offset_top = -1.06
+offset_bottom = 24.94
+grow_horizontal = 2
+text = "Choose a dice combination to use"
+horizontal_alignment = 1
+
+[node name="Combos" type="VBoxContainer" parent="DiceUI/SpellOptions"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.172
+anchor_right = 1.0
+anchor_bottom = 0.944
+offset_top = 0.0399971
+offset_bottom = 0.0799713
+grow_horizontal = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="StatusBar" type="NinePatchRect" parent="."]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.995
+anchor_bottom = 0.05
+offset_right = 3.99994
+offset_bottom = -30.0
+grow_horizontal = 2
+texture = ExtResource("11_n4iyw")
+region_rect = Rect2(-1, -1, 66, 66)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="StatusBar/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="StatusBar/MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = SubResource("AtlasTexture_hle3f")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="StatusBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 16
+text = "21485"
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="StatusBar/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="Label" type="Label" parent="StatusBar/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 16
+text = "69420"
+vertical_alignment = 1
+
+[node name="Floaters" type="Node2D" parent="."]
+
+[connection signal="pressed" from="DiceUI/RollButton/NinePatchRect/Button" to="." method="_on_roll_button_pressed"]

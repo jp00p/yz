@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdvxfyrvlumfw"]
+
+[ext_resource type="Script" path="res://ui/spell.gd" id="1_lq6ql"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3rt1s"]
+load_path = "res://.godot/imported/S_Thunder02.png-c49182c690202ed7faedfee21ad3d401.ctex"
+
+[node name="Spell" type="PanelContainer"]
+custom_minimum_size = Vector2(50, 0)
+offset_right = 422.0
+offset_bottom = 114.0
+size_flags_vertical = 4
+script = ExtResource("1_lq6ql")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Cols" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/Cols"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("CompressedTexture2D_3rt1s")
+stretch_mode = 4
+
+[node name="Info" type="HBoxContainer" parent="MarginContainer/Cols"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="Stats" type="VBoxContainer" parent="MarginContainer/Cols/Info"]
+layout_mode = 2
+
+[node name="Hand" type="Label" parent="MarginContainer/Cols/Info/Stats"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+text = "Ones"
+autowrap_mode = 3
+
+[node name="SpellName" type="Label" parent="MarginContainer/Cols/Info/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+text = "Spell Name"
+
+[node name="Details" type="VBoxContainer" parent="MarginContainer/Cols/Info"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Score" type="Label" parent="MarginContainer/Cols/Info/Details"]
+layout_mode = 2
+text = "25"
+
+[node name="Effect" type="Label" parent="MarginContainer/Cols/Info/Details"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "This spell does some cool stuff"
+autowrap_mode = 3
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

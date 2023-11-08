@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://bngvyy454ernd"]
+
+[ext_resource type="Script" path="res://ui/entity_stats.gd" id="1_jo3ga"]
+
+[node name="EntityStats" type="Control"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_bottom = 50.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_jo3ga")
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Health" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/Health"]
+layout_mode = 2
+text = "Health"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="Container/Health"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+value = 0.5
+
+[node name="HealthValue" type="Label" parent="Container/Health"]
+layout_mode = 2
+
+[node name="Substats" type="VBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="Block" type="HBoxContainer" parent="Container/Substats"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/Substats/Block"]
+layout_mode = 2
+text = "Block"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BlockValue" type="Label" parent="Container/Substats/Block"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+vertical_alignment = 1
+
+[node name="Poison" type="HBoxContainer" parent="Container/Substats"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/Substats/Poison"]
+layout_mode = 2
+text = "Poison"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="PoisonValue" type="Label" parent="Container/Substats/Poison"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+vertical_alignment = 1
