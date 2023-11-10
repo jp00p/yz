@@ -21,9 +21,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Spells="*res://autoloads/spells.gd"
 Globals="*res://autoloads/globals.gd"
 Utils="*res://autoloads/utils.gd"
-Spells="*res://autoloads/spells.gd"
 Enemies="*res://autoloads/enemies.gd"
 Events="*res://autoloads/events.gd"
 

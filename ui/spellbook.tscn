@@ -1,22 +1,95 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbgnh5sgaws3u"]
+[gd_scene load_steps=10 format=3 uid="uid://bbgnh5sgaws3u"]
 
+[ext_resource type="FontFile" uid="uid://ch8hkfpemoq7y" path="res://graphics/CompassPro.ttf" id="1_0jcnk"]
 [ext_resource type="Script" path="res://ui/spellbook.gd" id="1_003kq"]
+[ext_resource type="Texture2D" uid="uid://tjc3mbtgd1y6" path="res://graphics/ui/spellbook_bg.png" id="2_3ddrt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5v6m"]
-bg_color = Color(0.4, 0.247059, 0.0588235, 0.545098)
+[sub_resource type="Theme" id="Theme_uqh7x"]
+default_font = ExtResource("1_0jcnk")
+default_font_size = 22
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0654"]
+atlas = ExtResource("2_3ddrt")
+region = Rect2(145, 161, 246, 310)
+
+[sub_resource type="Animation" id="Animation_2ryjj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(660, 309)]
+}
+
+[sub_resource type="Animation" id="Animation_na4op"]
+resource_name = "hide"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, -2),
+"update": 0,
+"values": [Vector2(660, 309), Vector2(1200, 309)]
+}
+
+[sub_resource type="Animation" id="Animation_81v71"]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(1200, 309), Vector2(660, 309)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a1slk"]
+_data = {
+"RESET": SubResource("Animation_2ryjj"),
+"hide": SubResource("Animation_na4op"),
+"show": SubResource("Animation_81v71")
+}
 
 [node name="Spellbook" type="Control"]
-custom_minimum_size = Vector2(482, 700)
 layout_mode = 3
-anchor_left = 0.529
-anchor_top = 0.036
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.303955
-offset_top = 0.351997
+offset_left = 660.0
+offset_top = 309.0
+offset_right = 1024.0
+offset_bottom = 768.0
 grow_horizontal = 0
-grow_vertical = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme = SubResource("Theme_uqh7x")
 script = ExtResource("1_003kq")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_c0654")
+stretch_mode = 4
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -25,20 +98,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_v5v6m")
 horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
 [node name="Spells" type="GridContainer" parent="ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/h_separation = 16
-theme_override_constants/v_separation = 16
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a1slk")
+}

@@ -6,12 +6,15 @@ signal block_changed
 signal died
 signal attacked(target)
 signal casted_spell
+signal rolled
 
 var hp :int = 1 : set = set_hp
 var max_hp :int = 100
 var dice: Array[Die] = []
 var spellbook: Dictionary = {}
 var shake_target = "Player"
+var rolls = 0
+var max_rolls = 3
 
 var poison = 0 : set = set_poison # poison decays 1 per turn
 var poison_decay_mod : int = 0 # more of this, less poison per turn
@@ -34,16 +37,24 @@ func take_damage(damage_amount, element_type=null):
 
 func take_poison_damage() -> void:
     if poison > 0:
-        self.hp = max((self.hp - poison), 0)
+        await Utils.wait()
+        print("Taking poison damage!")
+        take_damage(poison)
         self.poison = poison - (1 + poison_decay_mod)
 
+
 func block_decay():
+    print("Resetting block!")
     if block > 0:
+        await Utils.wait()
         self.block = 0 + block_decay_mod
 
-func status_tick():
-    take_poison_damage()
-    block_decay()
+func status_tick(phase="start"):
+    match phase:
+        "start":
+            block_decay()
+        "end":
+            take_poison_damage()
 
 func set_hp(val):
     hp = min(val, max_hp)
@@ -63,11 +74,10 @@ func set_block(val):
 
 func disable_dice():
     for d in dice:
-        d.active = false
+        d.put_away()
 
 func enable_dice():
-    for d in dice:
-        d.active = true
+    pass
 
 func create_initial_dice() -> Array:
     # load initial five dice
@@ -84,17 +94,6 @@ func add_spell(spellname) -> Spell:
     spellbook[spellname] = new_spell
     return new_spell
 
-func list_spells(only_available_spells=false) -> Array[Spell]:
-    # returns array of spells
-    # pass "true" to only return spells that haven't been cast yet
-    if not only_available_spells:
-        return spellbook.keys()
-    var available_spells = []
-    for spell in spellbook:
-        if not spell.has_cast:
-            available_spells.append(spell)
-    return available_spells
-
 func add_dice(num_dice=1) -> void:
     for d in range(num_dice):
         var new_die = Globals.DIE.instantiate()
@@ -102,41 +101,61 @@ func add_dice(num_dice=1) -> void:
         self.dice.append(new_die)
 
 func roll_dice() -> Array[Die]:
+    self.rolls += 1
     for d in dice:
         d.roll()
     return dice
 
 func attack(target:Entity) -> void:
-    print("%s attacked %s" % [self.name, target])
+    # tell the game this character wants to attack
+    # enemies have their own attack logic
+    # players will manually roll/cast spell
+    var target_name = "Enemy"
+    var attacker = "Player"
+    if target is Player:
+        target_name = "Player"
+        attacker = "Enemy"
+    print("%s attacked %s" % [attacker, target_name])
     attacked.emit(target)
 
-func set_spell_components(hands) -> void:
-    # does the spell match a valid yahtzee hand we rolled?
+func prepare_spells() -> void:
+    var hands = Utils.generate_hands(dice)
+    Utils.debug_hands(hands)
+    # given a set of yahtzee hands
+    # set spells' components (dice + score)
     for spell in spellbook.values():
-        spell.components = {}
         if spell.hand in hands.keys():
-            if hands[spell.hand]["dice"].size() > 0:
-                spell.components = hands[spell.hand]
+            spell.components = hands[spell.hand]
+            spell.prepared = true
 
-func prepare_spellbook() -> Array:
+func get_ready_spells() -> Array:
     var ready_spells = []
     for spell in spellbook.values():
-        spell.prepared = false
-        if spell.components.size() > 0:
-            spell.prepared = true
+        if spell.prepared:
+            print("%s can be cast" % spell.spell_name)
             ready_spells.append(spell)
     return ready_spells
 
 func cast_spell(spell:Spell, target:Entity):
-    spell.score = spell.components.score[0]
+    spell.score = 0 #spell.components.score[0]
     spell.cast(target)
     casted_spell.emit()
 
+func reset_spells(preparation=true, cast_status=false):
+    for spell in spellbook:
+        if preparation:
+            spell.prepared = false
+        if cast_status:
+            spell.has_cast = false
+
 func heal(amt:int) -> void:
+    print("Ooh I'm healed")
     self.hp += amt
 
 func add_poison(amt:int) -> void:
+    print("Ow I'm poisoned!")
     self.poison += amt
 
 func add_block(amt:int) -> void:
+    print("Gird thy loins!")
     self.block += amt

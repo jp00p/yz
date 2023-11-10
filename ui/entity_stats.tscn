@@ -1,77 +1,199 @@
-[gd_scene load_steps=2 format=3 uid="uid://bngvyy454ernd"]
+[gd_scene load_steps=11 format=3 uid="uid://bngvyy454ernd"]
 
 [ext_resource type="Script" path="res://ui/entity_stats.gd" id="1_jo3ga"]
+[ext_resource type="Texture2D" uid="uid://l2vnp7kfnymn" path="res://graphics/ui/icons/E_Metal02.png" id="2_duitk"]
+[ext_resource type="Texture2D" uid="uid://payh7by6go41" path="res://graphics/ui/player/PipSqueak.png" id="2_qvr8w"]
+[ext_resource type="Texture2D" uid="uid://bog8mppivapmt" path="res://graphics/ui/icons/S_Poison05.png" id="3_qnqhp"]
 
-[node name="EntityStats" type="Control"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 3
-anchors_preset = 0
-offset_bottom = 50.0
-size_flags_horizontal = 3
-size_flags_vertical = 0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h1c12"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wa3ip"]
+load_path = "res://.godot/imported/box.png-78b88b35935551a8b91ed5365e185afa.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0c8i"]
+atlas = SubResource("CompressedTexture2D_wa3ip")
+region = Rect2(52, 26, 26, 26)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5016s"]
+texture = SubResource("AtlasTexture_k0c8i")
+expand_margin_left = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qoxhm"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 16
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nen5"]
+bg_color = Color(0.929412, 0, 0.243137, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_size = 2
+
+[node name="EntityStats" type="PanelContainer"]
+use_parent_material = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -62.0
+offset_right = 203.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h1c12")
 script = ExtResource("1_jo3ga")
 
-[node name="Container" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 32
+[node name="MarginContainer" type="MarginContainer" parent="."]
+use_parent_material = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Health" type="HBoxContainer" parent="Container"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+texture_filter = 1
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_5016s")
+
+[node name="Portrait" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/PanelContainer"]
+unique_name_in_owner = true
+use_parent_material = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("2_qvr8w")
+expand_mode = 2
+stretch_mode = 5
+flip_h = true
+
+[node name="Health" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Health"]
+use_parent_material = true
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="Container/Health"]
-layout_mode = 2
-text = "Health"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="Container/Health"]
-custom_minimum_size = Vector2(150, 0)
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/Health/VBoxContainer"]
+unique_name_in_owner = true
+use_parent_material = true
+custom_minimum_size = Vector2(200, 15)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 28
+theme_override_styles/background = SubResource("StyleBoxFlat_qoxhm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7nen5")
 max_value = 1.0
 value = 0.5
+show_percentage = false
 
-[node name="HealthValue" type="Label" parent="Container/Health"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Health/VBoxContainer"]
+use_parent_material = true
 layout_mode = 2
+alignment = 1
 
-[node name="Substats" type="VBoxContainer" parent="Container"]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Health/VBoxContainer/HBoxContainer"]
+use_parent_material = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.113725, 0.0352941, 0.00784314, 1)
+text = "HP:"
 
-[node name="Block" type="HBoxContainer" parent="Container/Substats"]
+[node name="HealthValue" type="Label" parent="MarginContainer/HBoxContainer/Health/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.113725, 0.0352941, 0.00784314, 1)
+text = "10/100"
+
+[node name="Substats" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+alignment = 1
+
+[node name="Block" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Substats"]
+use_parent_material = true
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Label" type="Label" parent="Container/Substats/Block"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Substats/Block"]
+texture_filter = 2
+use_parent_material = true
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-text = "Block"
-horizontal_alignment = 2
-vertical_alignment = 1
+texture = ExtResource("2_duitk")
+expand_mode = 2
+stretch_mode = 4
 
-[node name="BlockValue" type="Label" parent="Container/Substats/Block"]
+[node name="BlockValue" type="Label" parent="MarginContainer/HBoxContainer/Substats/Block"]
+unique_name_in_owner = true
+use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.113725, 0.0352941, 0.00784314, 1)
 text = "0"
 vertical_alignment = 1
 
-[node name="Poison" type="HBoxContainer" parent="Container/Substats"]
+[node name="Poison" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Substats"]
+use_parent_material = true
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Label" type="Label" parent="Container/Substats/Poison"]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/Substats/Poison"]
+texture_filter = 2
+use_parent_material = true
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-text = "Poison"
-horizontal_alignment = 2
-vertical_alignment = 1
+texture = ExtResource("3_qnqhp")
+expand_mode = 2
+stretch_mode = 4
 
-[node name="PoisonValue" type="Label" parent="Container/Substats/Poison"]
+[node name="PoisonValue" type="Label" parent="MarginContainer/HBoxContainer/Substats/Poison"]
+unique_name_in_owner = true
+use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.113725, 0.0352941, 0.00784314, 1)
 text = "0"
 vertical_alignment = 1

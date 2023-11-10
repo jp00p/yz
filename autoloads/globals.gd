@@ -5,6 +5,8 @@ extends Node
 @onready var FLOATING_TEXT = preload("res://objects/floating_text.tscn")
 @onready var ENTITY_STATS = preload("res://ui/entity_stats.tscn")
 @onready var SPELLBOOK = preload("res://ui/spellbook.tscn")
+@onready var ROLL_BUTTON = preload("res://ui/roll_button.tscn")
+@onready var DICE_TRAY = preload("res://ui/dice_tray.tscn")
 
 signal shake_panel(which)
 signal reset_panels
@@ -12,10 +14,17 @@ signal create_floating_text(text:FloatingText)
 signal enemy_died
 signal enemy_attack(target)
 
-enum SPELL_EFFECTS {
-    DAMAGE_ENEMY,
-    HEAL_SELF
-}
+signal player_ready_to_cast
+signal roll_dice(who) # make someone roll
+signal toggle_roll_button_state(state) # enable/disable roll button
+signal add_dice_tray(whose) # combat starts, adds a dice tray to the UI
+signal show_spell_options
+signal swap_dice(who) # swap whose dice in the dice tray
+
+var player:Player = null
+var player_stats
+var roll_button
+var spellbook
 
 enum DICE_EFFECTS {
     NONE,
@@ -32,10 +41,6 @@ enum DICE_EFFECTS {
 
 var DIE50 = Vector2(50,50)
 var DIE30 = Vector2(30,30)
-
-var new_spells = {
-    "Blaze": { }
-}
 
 # die material: wood, bone, iron, gold
 # magic element: ether, gaia, flux, weave, ruin
@@ -202,8 +207,22 @@ var dice_prefixes : Dictionary = {
 }
 
 
+func _ready():
+    player = Player.new()
+    add_child(player)
+    player_stats = ENTITY_STATS.instantiate()
+    player_stats.entity = player
+
+    spellbook = SPELLBOOK.instantiate()
+    spellbook.entity = player
+
+    roll_button = ROLL_BUTTON.instantiate()
+    roll_button.entity = player
+
+
 func new_floating_text(location:Vector2, text:String):
     var floating_text = FLOATING_TEXT.instantiate()
     floating_text.text_location = location
     floating_text.text_value = text
     self.create_floating_text.emit(floating_text)
+

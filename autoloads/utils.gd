@@ -1,5 +1,10 @@
 extends Node
 
+var YAHTZEE_SCORE = 50
+var FULL_HOUSE_SCORE = 25
+var SM_STRAIGHT_SCORE = 30
+var LG_STRAIGHT_SCORE = 40
+
 func wait(time=1.0):
     var timer = get_tree().create_timer(time, false)
     await timer.timeout
@@ -29,7 +34,10 @@ func get_combinations(data, length):
     generate_combinations(data, 0, length, current_combination, result)
     return result
 
-func check_dice_conditions(dice_array):
+func results(dice, score) -> Dictionary:
+    return { "dice": dice, "score": score }
+
+func generate_hands(dice_array) -> Dictionary:
 
     var basic_hands = [
         Spells.HANDS.ONES,
@@ -40,21 +48,19 @@ func check_dice_conditions(dice_array):
         Spells.HANDS.SIXES,
     ]
 
-    var conditions = { # Dictionary to store all valid hands
-        Spells.HANDS.PAIR: { "dice": [], "score": [] },
-        #"Two pair": { "dice": [], "score": [] },
-        Spells.HANDS.THREE_OF_A_KIND:{ "dice": [], "score": [] },
-        Spells.HANDS.FOUR_OF_A_KIND:{ "dice": [], "score": [] },
-        Spells.HANDS.FULL_HOUSE:{ "dice": [], "score": [] },
-        Spells.HANDS.SM_STRAIGHT:{ "dice": [], "score": [] },
-        Spells.HANDS.LG_STRAIGHT:{ "dice": [], "score": [] },
-        Spells.HANDS.YAHTZEE:{ "dice": [], "score": [] },
-        Spells.HANDS.CHANCE:{ "dice": [], "score": [] }
-    }
-    var dice_counts = {}  # Dictionary to store dice values and their counts
-    var included_dice = {}  # Dictionary to store included dice for each condition
+    # conditions = {
+    #   Spells.HANDS.ONES: [
+    #       { "dice":[], "score":0 },
+    #       { "dice":[], "score":0 }
+    #       { "dice":[], "score":0 }
+    #   ]
+    # }
 
-    # Count the occurrences of each dice value
+    var conditions = {} # the final results
+    var dice_counts = {}  # dice values and their counts
+    var included_dice = {}  # included dice for each condition
+
+    # count the occurrences of each dice value
     for dice in dice_array:
         var value = dice.value
         if value not in dice_counts:
@@ -64,67 +70,78 @@ func check_dice_conditions(dice_array):
             included_dice[value] = []
         included_dice[value].append(dice)
 
-    # Check for one or more of a single number
-    # These are worth the sum of the dice with that number
+    # check for one or more of a single number
+    # these are the basic yahtzee hands (top rows)
+    # each hand here is worth the sum of the included dice
     for value in dice_counts.keys():
-        #print(dice_counts[value])
         var count = dice_counts[value]
         if count >= 1:
-            var idx = value - 1
-            var number_label = basic_hands[idx]
-            conditions[number_label] = { "dice": [], "score": [] }
-            var included = []
-            for dice in included_dice[value]:
-                included.append(dice)
-            conditions[number_label]["dice"].append(included)
-            conditions[number_label]["score"].append(sum(included, true))
 
-    # Check for one pair, two pairs, three of a kind, four of a kind, full house, and Yahtzee
+            var i = value - 1
+            var number_label = basic_hands[i]
+            var included_for_this_hand = []
+            conditions[number_label] = [] # add to conditions dict
+
+            for dice in included_dice[value]:
+                included_for_this_hand.append(dice)
+            var basic_hand_score = sum(included_for_this_hand, true)
+            # add to the final conditions dict
+            conditions[number_label].append(results(included_for_this_hand, basic_hand_score))
+
+    # more advanced hand checks start here
     var pair_values = []
     var three_of_a_kind_values = []
+    conditions[Spells.HANDS.PAIR] = []
 
     for value in dice_counts.keys():
-        var count = dice_counts[value]
+        var count = dice_counts[value] # how many of these dice are there
         if count >= 2:
             if count == 2: # is it ONLY one pair?
                 pair_values.append(value)
                 var included = []
                 for dice in included_dice[value]:
                     included.append(dice)
-                conditions[Spells.HANDS.PAIR]["dice"].append(included)
-                conditions[Spells.HANDS.PAIR]["score"].append(included[0].value + included[1].value) # one pair is worth the sum of the pair of dice
+                var pair_score = included[0].value + included[1].value
+                conditions[Spells.HANDS.PAIR].append(results(included, pair_score))
             else:
-                # otherwise we gotta get all the combination of dice pairs
+                # if there's more than one pair
+                # things get more complicated
                 var combinations = get_combinations(included_dice[value], 2)
                 for combo in combinations:
                     if combo.size() > 1:
-                        conditions[Spells.HANDS.PAIR]["dice"].append(combo)
-                        conditions[Spells.HANDS.PAIR]["score"].append(combo[0].value + combo[1].value)
+                        var pair_score = combo[0].value + combo[1].value
+                        conditions[Spells.HANDS.PAIR].append(results(combo, pair_score))
 
         if count >= 3:
+            # check for three of a kind
             three_of_a_kind_values.append(value)
+            conditions[Spells.HANDS.THREE_OF_A_KIND] = []
             var combinations = get_combinations(included_dice[value], 3)
             for combo in combinations:
-                conditions[Spells.HANDS.THREE_OF_A_KIND]["dice"].append(combo)
-                conditions[Spells.HANDS.THREE_OF_A_KIND]["score"].append(sum(dice_array, true)) # 3oak is worth all the dice summed up
+                var combo_score = sum(dice_array, true)
+                conditions[Spells.HANDS.THREE_OF_A_KIND].append(results(combo, combo_score)) # 3oak is worth all the dice summed up
 
             if count >= 4:
-                conditions[Spells.HANDS.FOUR_OF_A_KIND]["dice"].append(included_dice[value])
-                conditions[Spells.HANDS.FOUR_OF_A_KIND]["score"].append(sum(dice_array, true)) # 4oak is worth all the dice summed up
+                conditions[Spells.HANDS.FOUR_OF_A_KIND] = []
+                var four_oak_score = sum(dice_array, true)
+                conditions[Spells.HANDS.FOUR_OF_A_KIND].append(results(included_dice[value], four_oak_score)) # 4oak is worth all the dice summed up
                 if count == 5:
-                    conditions[Spells.HANDS.YAHTZEE]["dice"].append(included_dice[value])
-                    conditions[Spells.HANDS.YAHTZEE]["score"].append(50) # yahtzee is worth 50 score
+                    # YAHTZEE!!!
+                    conditions[Spells.HANDS.YAHTZEE] = []
+                    conditions[Spells.HANDS.YAHTZEE].append(results(included_dice[value], YAHTZEE_SCORE))
 
     if pair_values.size() >= 2:
-        var combinations = get_combinations(pair_values, 2)
-        for combo in combinations:
-
-            var included_pairs = []
-            for value in combo:
-                included_pairs += included_dice[value]
-            #conditions[Spells.HANDS.TWO_PAIR]["dice"].append(included_pairs) # not using this right now
+        pass
+        #var combinations = get_combinations(pair_values, 2)
+        #for combo in combinations:
+        #    var included_pairs = []
+        #    for value in combo:
+        #        included_pairs += included_dice[value]
+        #        conditions[Spells.HANDS.TWO_PAIR]["dice"].append(included_pairs)
+        # not using TWO_PAIR right now
 
     if three_of_a_kind_values.size() >= 1 and pair_values.size() >= 1:
+        conditions[Spells.HANDS.FULL_HOUSE] = []
         var combinations = get_combinations(three_of_a_kind_values, 1)
         var full_house_combinations = get_combinations(pair_values, 1)
         for three_of_a_kind_combo in combinations:
@@ -136,10 +153,9 @@ func check_dice_conditions(dice_array):
                 for value in pair_combo:
                     included_two += included_dice[value]
                 var all_included_dice = included_three + included_two
-                conditions[Spells.HANDS.FULL_HOUSE]["dice"].append(all_included_dice)
-                conditions[Spells.HANDS.FULL_HOUSE]["score"].append(25)
+                conditions[Spells.HANDS.FULL_HOUSE].append(results(all_included_dice, FULL_HOUSE_SCORE))
 
-    # Check for all possible small straights
+    # check for all possible small straights
     var distinct_values = dice_counts.keys()
     distinct_values.sort()
     for i in range(len(distinct_values) - 3):
@@ -151,24 +167,38 @@ func check_dice_conditions(dice_array):
                     break
 
         if is_straight:
+            conditions[Spells.HANDS.SM_STRAIGHT] = []
             var included = []
             for j in range(i, i + 4):
                 included += included_dice[distinct_values[j]]
-            conditions[Spells.HANDS.SM_STRAIGHT]["dice"].append(included)
-            conditions[Spells.HANDS.SM_STRAIGHT]["score"].append(30) # small straight is 30 score
+            conditions[Spells.HANDS.SM_STRAIGHT].append(results(included, SM_STRAIGHT_SCORE))
 
-    # Check for all possible large straights
+    # check for all possible large straights
     if len(distinct_values) == 5 and distinct_values[4] - distinct_values[0] == 4:
+        conditions[Spells.HANDS.LG_STRAIGHT] = []
         var included = []
         for value in distinct_values:
             included += included_dice[value]
-        conditions[Spells.HANDS.LG_STRAIGHT]["dice"].append(included)
-        conditions[Spells.HANDS.LG_STRAIGHT]["score"].append(40) # large straight is 40 score
+        conditions[Spells.HANDS.LG_STRAIGHT].append(results(included, LG_STRAIGHT_SCORE))
 
-    conditions[Spells.HANDS.CHANCE]["dice"].append(dice_array)
-    conditions[Spells.HANDS.CHANCE]["score"].append(sum(dice_array, true))
+    # add chance (all dice)
+    var chance_score = sum(dice_array, true)
+    conditions[Spells.HANDS.CHANCE] = []
+    conditions[Spells.HANDS.CHANCE].append(results(dice_array, chance_score))
 
-    for hand in conditions:
-        if conditions[hand].get("dice").size() == 0 and conditions[hand].get("score").size() == 0:
-            conditions.erase(hand)
+    if conditions[Spells.HANDS.PAIR].size() == 0:
+        conditions.erase(Spells.HANDS.PAIR)
+
     return conditions
+
+func debug_hands(hand):
+    print("--- HANDS ------------------------------ ")
+    for h in hand.keys():
+        var handname = Spells.hand_name(h)
+        for result in hand[h]:
+            var dice_values = []
+            var score = result["score"]
+            for d in result["dice"]:
+                dice_values.append(d.value)
+            print("ID: %2d %12s Score: %2s Dice: %s" % [h, handname, score, dice_values])
+    print("--------------------------------------- ")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://417c7p04pq7r"]
+
+[ext_resource type="Script" path="res://ui/parallax_background.gd" id="1_6g2j1"]
+[ext_resource type="Texture2D" uid="uid://cmf1c5jylny8h" path="res://graphics/table-tile.png" id="1_yjbvx"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+script = ExtResource("1_6g2j1")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+texture_repeat = 2
+motion_mirroring = Vector2(1024, 768)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
+texture_repeat = 2
+custom_minimum_size = Vector2(1024, 768)
+offset_right = 640.0
+offset_bottom = 480.0
+texture = ExtResource("1_yjbvx")
+stretch_mode = 1

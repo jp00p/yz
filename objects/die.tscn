@@ -22,6 +22,8 @@ offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(25, 25)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_fecqj")
 
 [node name="Border" type="ReferenceRect" parent="."]

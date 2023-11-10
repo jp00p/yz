@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://f7b8iqv3ua45"]
+
+[ext_resource type="FontFile" uid="uid://ch8hkfpemoq7y" path="res://graphics/CompassPro.ttf" id="1_57u1n"]
+
+[resource]
+default_font = ExtResource("1_57u1n")
+default_font_size = 22

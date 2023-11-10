@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://nl7gqbw6gk2r"]
+
+[ext_resource type="Script" path="res://ui/dice_tray.gd" id="1_gv5i3"]
+[ext_resource type="Texture2D" uid="uid://d2lhyllrhytsj" path="res://graphics/ui/backgrounds/Dungeon Arena2.png" id="1_t3fow"]
+
+[node name="DiceTray" type="Control"]
+use_parent_material = true
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_gv5i3")
+
+[node name="Combos" type="Control" parent="."]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceArena" type="TextureRect" parent="."]
+texture_filter = 1
+use_parent_material = true
+custom_minimum_size = Vector2(320, 270)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 280.0
+texture = ExtResource("1_t3fow")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Markers" type="Node2D" parent="DiceArena"]
+use_parent_material = true
+
+[node name="Marker" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(108, 100)
+gizmo_extents = 25.0
+
+[node name="Marker2D2" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(196, 96)
+gizmo_extents = 25.0
+
+[node name="Marker2D3" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(223, 197)
+gizmo_extents = 25.0
+
+[node name="Marker2D4" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(99, 210)
+gizmo_extents = 25.0
+
+[node name="Marker2D5" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(166, 158)
+gizmo_extents = 25.0
+
+[node name="DiceHolder" type="Node2D" parent="DiceArena"]
+unique_name_in_owner = true

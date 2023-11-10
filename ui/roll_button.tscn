@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxdwbck6esp2h"]
+
+[ext_resource type="Script" path="res://ui/roll_button.gd" id="1_gqlel"]
+
+[node name="RollButton" type="Control"]
+layout_mode = 3
+anchor_left = 0.48
+anchor_top = 0.885
+anchor_right = 0.52
+anchor_bottom = 0.937
+offset_left = 0.47998
+offset_top = 0.319946
+offset_right = -0.480042
+offset_bottom = 0.383972
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+script = ExtResource("1_gqlel")
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "ROLL"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

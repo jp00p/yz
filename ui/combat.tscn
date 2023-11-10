@@ -1,106 +1,39 @@
-[gd_scene load_steps=7 format=3 uid="uid://7ofci23rdchc"]
+[gd_scene load_steps=3 format=3 uid="uid://7ofci23rdchc"]
 
 [ext_resource type="Script" path="res://ui/combat.gd" id="1_8n47r"]
-[ext_resource type="Shader" path="res://graphics/shaders/slice.gdshader" id="2_7tt1i"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xw0sa"]
-shader = ExtResource("2_7tt1i")
-shader_parameter/direction = Vector2(0, 0.5)
-shader_parameter/offset = 0.0
-shader_parameter/fade = 0.7
-shader_parameter/strip = 4.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqfqf"]
 
-[sub_resource type="Animation" id="Animation_lwv61"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Graphic:material:shader_parameter/offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_ncwtk"]
-resource_name = "death"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Graphic:material:shader_parameter/offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7hctx"]
-_data = {
-"RESET": SubResource("Animation_lwv61"),
-"death": SubResource("Animation_ncwtk")
-}
-
-[node name="Combat" type="HBoxContainer"]
-offset_right = 423.0
-offset_bottom = 125.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_constants/separation = 24
-alignment = 1
+[node name="Combat" type="PanelContainer"]
+texture_filter = 1
+use_parent_material = true
+offset_right = 400.0
+offset_bottom = 97.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hqfqf")
 script = ExtResource("1_8n47r")
 
-[node name="MonsterDetails" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(320, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="Row" type="HBoxContainer" parent="MonsterDetails"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+use_parent_material = true
 layout_mode = 2
 
-[node name="GraphicHolder" type="Control" parent="MonsterDetails/Row"]
-custom_minimum_size = Vector2(125, 125)
+[node name="Rows" type="VBoxContainer" parent="CenterContainer"]
+use_parent_material = true
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
+theme_override_constants/separation = 32
 
-[node name="Graphic" type="TextureRect" parent="MonsterDetails/Row/GraphicHolder"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_xw0sa")
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-expand_mode = 3
-
-[node name="MonsterAnimation" type="AnimationPlayer" parent="MonsterDetails/Row/GraphicHolder"]
-libraries = {
-"": SubResource("AnimationLibrary_7hctx")
-}
-
-[node name="MonsterDiceTray" type="FlowContainer" parent="MonsterDetails/Row"]
-custom_minimum_size = Vector2(300, 0)
+[node name="MonsterDetails" type="Control" parent="CenterContainer/Rows"]
+unique_name_in_owner = true
+use_parent_material = true
 layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
+size_flags_vertical = 3
+
+[node name="MonsterDiceTray" type="HBoxContainer" parent="CenterContainer/Rows"]
+unique_name_in_owner = true
+use_parent_material = true
+custom_minimum_size = Vector2(400, 65)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 alignment = 1

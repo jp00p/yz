@@ -15,7 +15,8 @@ enum HANDS {
     SM_STRAIGHT,
     LG_STRAIGHT,
     YAHTZEE,
-    CHANCE
+    CHANCE,
+    SCRATCH
 }
 
 func hand_name(hand:int):
@@ -225,6 +226,17 @@ var CHANCE = {
             [EFFECTS.BLOCK, "x.score", "chance(0.33)"],
             [EFFECTS.HEAL, "x.score", "chance(0.33)"],
             [EFFECTS.POISON, "5", "chance(0.33)"]
+        ]
+    }
+}
+
+var SCRATCH = {
+    "Scratch": {
+        "name": "Scratch",
+        "description": "A weak scratch attack",
+        "hand":HANDS.SCRATCH,
+        "effects": [
+            [EFFECTS.DAMAGE, "x.score"]
         ]
     }
 }

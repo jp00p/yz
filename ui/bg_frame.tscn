@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://h7pij6oul2pv"]
+
+[ext_resource type="Texture2D" uid="uid://m1b7ar3yj0cr" path="res://graphics/ui/mask.png" id="1_7pysg"]
+[ext_resource type="Shader" path="res://graphics/shaders/desat.gdshader" id="1_ygo13"]
+[ext_resource type="Script" path="res://ui/bg_frame.gd" id="2_2jqwd"]
+[ext_resource type="Texture2D" uid="uid://b5ywnspifq0uo" path="res://graphics/ui/backgrounds/castle pack5.png" id="4_nu43d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ehtpj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uarkt"]
+shader = ExtResource("1_ygo13")
+shader_parameter/saturation = 0.33
+
+[node name="BGFrame" type="TextureRect"]
+clip_children = 2
+texture_filter = 1
+material = SubResource("ShaderMaterial_ehtpj")
+clip_contents = true
+custom_minimum_size = Vector2(818, 613)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -409.6
+offset_top = -307.2
+offset_right = 409.6
+offset_bottom = 307.2
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7pysg")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("2_2jqwd")
+
+[node name="Image" type="TextureRect" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_uarkt")
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.065
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.0639954
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_nu43d")
+stretch_mode = 5

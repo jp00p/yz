@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3 uid="uid://nl7gqbw6gk2r"]
+
+[ext_resource type="Script" path="res://ui/dice_tray.gd" id="1_gv5i3"]
+[ext_resource type="Theme" uid="uid://f7b8iqv3ua45" path="res://ui/default_theme.tres" id="1_squt5"]
+[ext_resource type="Texture2D" uid="uid://d2lhyllrhytsj" path="res://graphics/ui/backgrounds/Dungeon Arena2.png" id="1_t3fow"]
+
+[node name="DiceTray" type="Control"]
+use_parent_material = true
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_squt5")
+script = ExtResource("1_gv5i3")
+
+[node name="Combos" type="Control" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceArena" type="TextureRect" parent="."]
+texture_filter = 1
+use_parent_material = true
+custom_minimum_size = Vector2(320, 270)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 280.0
+texture = ExtResource("1_t3fow")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Markers" type="Node2D" parent="DiceArena"]
+unique_name_in_owner = true
+use_parent_material = true
+
+[node name="Marker" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(108, 100)
+gizmo_extents = 25.0
+
+[node name="Marker2D2" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(196, 96)
+gizmo_extents = 25.0
+
+[node name="Marker2D3" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(223, 197)
+gizmo_extents = 25.0
+
+[node name="Marker2D4" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(102, 204)
+gizmo_extents = 25.0
+
+[node name="Marker2D5" type="Marker2D" parent="DiceArena/Markers"]
+use_parent_material = true
+position = Vector2(166, 158)
+gizmo_extents = 25.0
+
+[node name="DiceHolder" type="Node2D" parent="DiceArena"]
+unique_name_in_owner = true
+
+[node name="Label" type="Label" parent="DiceArena"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4125
+anchor_top = 0.914286
+anchor_right = 0.5875
+anchor_bottom = 0.992857
+offset_left = -29.0
+offset_top = -26.0
+offset_right = 29.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.219608, 0.447059, 0.415686, 0.603922)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "Roll 0/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
