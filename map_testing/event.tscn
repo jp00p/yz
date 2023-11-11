@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bljag3p26xs7k"]
 
-[ext_resource type="Script" path="res://event.gd" id="1_jivgr"]
+[ext_resource type="Script" path="res://map_testing/event.gd" id="1_jivgr"]
 
 [node name="event" type="Node2D"]
 script = ExtResource("1_jivgr")
