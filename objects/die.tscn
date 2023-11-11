@@ -9,21 +9,10 @@ atlas = SubResource("CompressedTexture2D_aahgp")
 region = Rect2(0, 0, 64, 64)
 
 [node name="Die" type="ColorRect"]
-custom_minimum_size = Vector2(50, 50)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -15.0
-offset_top = -15.0
-offset_right = 15.0
-offset_bottom = 15.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(25, 25)
-size_flags_horizontal = 4
-size_flags_vertical = 4
+offset_right = 50.0
+offset_bottom = 50.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("1_fecqj")
 
 [node name="Border" type="ReferenceRect" parent="."]

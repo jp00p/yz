@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5bitery77a0g"]
+
+[ext_resource type="Script" path="res://ui/score_row.gd" id="1_qr8nn"]
+
+[node name="ScoreRow" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qr8nn")
+
+[node name="Container" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ScoreCol" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/ScoreCol"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="HandName" type="Label" parent="Container/ScoreCol/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "ONES"
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="Container/ScoreCol/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "Total of all ones"
+vertical_alignment = 1
+
+[node name="DiceExample" type="HBoxContainer" parent="Container/ScoreCol"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+alignment = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

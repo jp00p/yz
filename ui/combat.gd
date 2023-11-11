@@ -57,6 +57,7 @@ func finish_enemy_turn():
 
 func finish_player_turn():
     print("Player turn complete")
+    await Utils.wait(3)
     Globals.spellbook.disable()
     player_turn_complete.emit()
     next_turn()

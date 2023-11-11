@@ -20,6 +20,7 @@ signal toggle_roll_button_state(state) # enable/disable roll button
 signal add_dice_tray(whose) # combat starts, adds a dice tray to the UI
 signal show_spell_options
 signal swap_dice(who) # swap whose dice in the dice tray
+signal set_score(hand, amt)
 
 var player:Player = null
 var player_stats

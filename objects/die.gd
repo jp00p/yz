@@ -18,7 +18,7 @@ var die_material = "Bone"
 var prefix = "Jagged"
 
 var atlas_texture = null
-var die_size = Globals.DIE50
+var die_size = Vector2(50,50)
 var visual_only = false
 
 var element_colors = {}
@@ -27,6 +27,7 @@ var test_prefixes = ["Jagged", "Pure", "None"]
 var active = true
 
 func _ready():
+    custom_minimum_size = die_size
     visible = false
     numerals.visible = false
     set_element("Basic")
@@ -40,6 +41,7 @@ func _ready():
     draw_face()
 
     if visual_only:
+        active = false
         mouse_filter = Control.MOUSE_FILTER_IGNORE
         visible = true
         numerals.visible = true

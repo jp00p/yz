@@ -145,8 +145,4 @@ unique_name_in_owner = true
 [node name="SpellbookUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
-[node name="Spellbook" parent="SpellbookUI" groups=["DebugUI"] instance=ExtResource("11_tdeg8")]
-offset_left = -364.0
-offset_top = -459.0
-offset_right = 0.0
-offset_bottom = 0.0
+[node name="Spellbook" parent="SpellbookUI" instance=ExtResource("11_tdeg8")]

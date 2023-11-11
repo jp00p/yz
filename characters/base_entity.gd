@@ -131,13 +131,11 @@ func prepare_spells() -> void:
 func get_ready_spells() -> Array:
     var ready_spells = []
     for spell in spellbook.values():
-        if spell.prepared:
-            print("%s can be cast" % spell.spell_name)
+        if spell.prepared and !spell.has_cast:
             ready_spells.append(spell)
     return ready_spells
 
 func cast_spell(spell:Spell, target:Entity):
-    spell.score = 0 #spell.components.score[0]
     spell.cast(target)
     casted_spell.emit()
 

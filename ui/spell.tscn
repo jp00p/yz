@@ -17,6 +17,7 @@ shadow_offset = Vector2(1, 1)
 
 [node name="Spell" type="PanelContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(300, 0)
 offset_right = 211.0
 offset_bottom = 73.0
 size_flags_horizontal = 3
@@ -70,12 +71,12 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "25"
 
 [node name="Effect" type="Label" parent="MarginContainer/Cols/Info/Stats"]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "This spell does some cool stuff"
 autowrap_mode = 3
-justification_flags = 162
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

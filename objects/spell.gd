@@ -27,6 +27,7 @@ func _init(spellname:String=""):
 
 func set_scores(val):
     scores = val
+    self.score = scores[0]
     scores_changed.emit()
 
 func get_scores_label():
@@ -57,7 +58,9 @@ func set_components(val) -> void:
 
 func cast(target:Entity) -> void:
     var outputs = []
+    self.has_cast = true
     self.times_cast += 1
+    Globals.set_score.emit(hand, score)
     # determine dice modifiers
     # determine spell effects and their totals
     for effect in effects:
@@ -96,4 +99,3 @@ func cast(target:Entity) -> void:
             Spells.EFFECTS.BLOCK:
                 print("Caster gets some block!")
                 await caster.add_block(output[1])
-

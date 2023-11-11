@@ -22,6 +22,65 @@ enum HANDS {
 func hand_name(hand:int):
     return HANDS.keys()[hand].capitalize()
 
+const HAND_INFO = {
+    HANDS.ONES : {
+        "dice":[1],
+        "description":"Sum of all ones"
+    },
+    HANDS.TWOS : {
+        "dice":[2],
+        "description":"Sum of all twos"
+    },
+    HANDS.THREES : {
+        "dice":[3],
+        "description":"Sum of all threes"
+    },
+    HANDS.FOURS : {
+        "dice":[4],
+        "description":"Sum of all fours"
+    },
+    HANDS.FIVES : {
+        "dice":[5],
+        "description":"Sum of all fives"
+    },
+    HANDS.SIXES : {
+        "dice":[6],
+        "description":"Sum of all sixes"
+    },
+    HANDS.PAIR : {
+        "dice":[1, 1],
+        "description":"Sum of the pair"
+    },
+    HANDS.THREE_OF_A_KIND : {
+        "dice":[1, 1, 1],
+        "description":"Sum of all dice"
+    },
+    HANDS.FOUR_OF_A_KIND : {
+        "dice":[1, 1, 1, 1],
+        "description":"Sum of all dice"
+    },
+    HANDS.FULL_HOUSE : {
+        "dice":[1,1,1,5,5],
+        "description":"25 points"
+    },
+    HANDS.SM_STRAIGHT : {
+        "dice":[1,2,3,4],
+        "description":"30 points"
+    },
+    HANDS.LG_STRAIGHT : {
+        "dice":[1,2,3,4,5],
+        "description":"40 points"
+    },
+    HANDS.YAHTZEE : {
+        "dice":[5,5,5,5,5],
+        "description":"50 points"
+    },
+    HANDS.CHANCE : {
+        "dice":[3,1,6,1,5],
+        "description":"Sum of all dice"
+    },
+}
+
 enum EFFECTS {
     DAMAGE,
     HEAL,

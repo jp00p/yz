@@ -124,7 +124,6 @@ func start_new_combat(enemy_name=""):
     new_combat.disable_player_input.connect(disable_player_input)
     new_combat.enemy_turn_complete.connect(enemy_turn_complete)
     new_combat.player_turn_complete.connect(player_turn_complete)
-
     event_ui.add_child(new_combat)
     current_event = new_combat
 
@@ -138,7 +137,8 @@ func enemy_turn_complete():
     pass #dice_tray.hide()
 
 func player_turn_complete():
-    Globals.spellbook.disable()
+    pass
+    # Globals.spellbook.disable()
 
 func show_next_level_options():
     var next_level = level_select.instantiate()

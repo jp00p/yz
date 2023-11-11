@@ -1,6 +1,7 @@
 extends Control
 
 @onready var spell_holder = %Spells
+@onready var score_scroll = %ScoreScroll
 
 var entity:Entity = null
 

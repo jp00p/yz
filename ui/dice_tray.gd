@@ -4,6 +4,7 @@ extends Control
 @onready var markers = %Markers
 @onready var dice_holder = %DiceHolder
 @onready var combos = %Combos
+@onready var roll_label = %RollLabel
 
 @export var debug:bool = false
 
@@ -14,9 +15,16 @@ func _ready() -> void:
         set_dice(entity)
     Globals.show_spell_options.connect(show_spell_options)
     Globals.swap_dice.connect(set_dice)
+    Globals.roll_dice.connect(update_roll_label)
+
+func update_roll_label(whose_turn):
+    if whose_turn == Globals.player:
+        roll_label.show()
+        roll_label.text = "Roll %s/%s" % [Globals.player.rolls, Globals.player.max_rolls]
 
 func clear() -> void:
     # remove any dice in the tray
+    roll_label.hide()
     for d in dice_holder.get_children():
         print("Removing %s" % d)
         entity.disable_dice()

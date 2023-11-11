@@ -65,7 +65,8 @@ gizmo_extents = 25.0
 [node name="DiceHolder" type="Node2D" parent="DiceArena"]
 unique_name_in_owner = true
 
-[node name="Label" type="Label" parent="DiceArena"]
+[node name="RollLabel" type="Label" parent="DiceArena"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4125

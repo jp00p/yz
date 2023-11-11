@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bljag3p26xs7k"]
+
+[ext_resource type="Script" path="res://event.gd" id="1_jivgr"]
+
+[node name="event" type="Node2D"]
+script = ExtResource("1_jivgr")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="gui_input" from="ReferenceRect" to="." method="_on_reference_rect_gui_input"]
+[connection signal="mouse_entered" from="ReferenceRect" to="." method="_on_reference_rect_mouse_entered"]
+[connection signal="mouse_exited" from="ReferenceRect" to="." method="_on_reference_rect_mouse_exited"]
