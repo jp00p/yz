@@ -60,7 +60,7 @@ func cast(target:Entity) -> void:
     var outputs = []
     self.has_cast = true
     self.times_cast += 1
-    Globals.set_score.emit(hand, score)
+    SignalBus.set_score.emit(hand, score)
     # determine dice modifiers
     # determine spell effects and their totals
     for effect in effects:

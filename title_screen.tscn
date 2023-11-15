@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://coli568gavhuf"]
+
+[ext_resource type="PackedScene" uid="uid://417c7p04pq7r" path="res://ui/parallax_background.tscn" id="1_w1u5i"]
+[ext_resource type="Theme" uid="uid://f7b8iqv3ua45" path="res://ui/default_theme.tres" id="1_xxvkr"]
+[ext_resource type="Script" path="res://title_screen.gd" id="2_wqgjm"]
+
+[node name="TitleScreen" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_xxvkr")
+script = ExtResource("2_wqgjm")
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("1_w1u5i")]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 64
+text = "Untitled Yahtzee 
+Ripoff Game"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Start" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "Play"
+
+[node name="Options" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "Options"

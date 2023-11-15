@@ -13,14 +13,19 @@ var entity : Entity = null
 func _ready() -> void:
     if not debug:
         set_dice(entity)
-    Globals.show_spell_options.connect(show_spell_options)
-    Globals.swap_dice.connect(set_dice)
-    Globals.roll_dice.connect(update_roll_label)
+    SignalBus.show_spell_options.connect(show_spell_options)
+    SignalBus.swap_dice.connect(set_dice)
+    SignalBus.roll_dice.connect(update_roll_label)
+    Globals.player.rolled.connect(player_rolled)
 
 func update_roll_label(whose_turn):
     if whose_turn == Globals.player:
         roll_label.show()
         roll_label.text = "Roll %s/%s" % [Globals.player.rolls, Globals.player.max_rolls]
+
+func player_rolled():
+    if Globals.player.rolls == Globals.player.max_rolls:
+        Globals.player.lock_dice()
 
 func clear() -> void:
     # remove any dice in the tray
@@ -39,9 +44,11 @@ func set_dice(who, clear_dice=true) -> void:
         for d in who.dice:
             var pos = %Markers.get_child(i)
             d.position = pos.position - (d.size/2)
+
             dice_holder.add_child(d)
             i += 1
         who.enable_dice()
+    dice_holder.rotation_degrees = randi_range(-5, 5)
 
 func show_spell_options(spell:Spell):
     var combos = spell_combos.instantiate()

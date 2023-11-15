@@ -13,6 +13,7 @@ var max_hp :int = 100
 var dice: Array[Die] = []
 var spellbook: Dictionary = {}
 var shake_target = "Player"
+
 var rolls = 0
 var max_rolls = 3
 
@@ -33,7 +34,8 @@ func reset_dice():
 func take_damage(damage_amount, element_type=null):
     print("Ouch!")
     self.hp = max((self.hp - damage_amount), 0)
-    Globals.shake_panel.emit(shake_target)
+    #Shake.make_shake(self, 10)
+    #SignalBus.shake_panel.emit(shake_target)
 
 func take_poison_damage() -> void:
     if poison > 0:
@@ -56,12 +58,15 @@ func status_tick(phase="start"):
         "end":
             take_poison_damage()
 
+func lock_dice():
+    dice.map(func(d): d.lock())
+
 func set_hp(val):
     hp = min(val, max_hp)
     hp_changed.emit()
     if hp <= 0:
         hp = 0
-        disable_dice()
+        #disable_dice()
         died.emit()
 
 func set_poison(val):
@@ -100,11 +105,12 @@ func add_dice(num_dice=1) -> void:
         new_die.holder = self
         self.dice.append(new_die)
 
-func roll_dice() -> Array[Die]:
+func roll_dice():
     self.rolls += 1
-    for d in dice:
-        d.roll()
-    return dice
+    dice.map(func(d): d.roll())
+    await get_tree().create_timer(1).timeout
+    rolled.emit()
+
 
 func attack(target:Entity) -> void:
     # tell the game this character wants to attack
@@ -121,6 +127,7 @@ func attack(target:Entity) -> void:
 func prepare_spells() -> void:
     var hands = Utils.generate_hands(dice)
     Utils.debug_hands(hands)
+    print_dice()
     # given a set of yahtzee hands
     # set spells' components (dice + score)
     for spell in spellbook.values():
@@ -157,3 +164,13 @@ func add_poison(amt:int) -> void:
 func add_block(amt:int) -> void:
     print("Gird thy loins!")
     self.block += amt
+
+func print_dice():
+    var ds = ""
+    for d in self.dice:
+        ds += "[%s" % d.value
+        if d.held:
+            ds += "*"
+        ds += "] "
+    print("DICE: %s" % ds)
+

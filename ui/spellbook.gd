@@ -1,7 +1,6 @@
 extends Control
 
 @onready var spell_holder = %Spells
-@onready var score_scroll = %ScoreScroll
 
 var entity:Entity = null
 
@@ -23,3 +22,19 @@ func disable():
     $AnimationPlayer.play("hide")
     await $AnimationPlayer.animation_finished
     visible = false
+
+func disable_spells():
+    for s in spell_holder.get_children():
+        s.can_cast = false
+
+func enable_spells():
+    for s in spell_holder.get_children():
+        s.can_cast = true
+
+func _on_animation_player_animation_started(_anim_name):
+    disable_spells()
+
+
+func _on_animation_player_animation_finished(anim_name):
+    if anim_name == "show":
+        enable_spells()

@@ -21,11 +21,15 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+SignalBus="*res://autoloads/signal_bus.gd"
 Spells="*res://autoloads/spells.gd"
 Globals="*res://autoloads/globals.gd"
 Utils="*res://autoloads/utils.gd"
 Enemies="*res://autoloads/enemies.gd"
 Events="*res://autoloads/events.gd"
+Shake="*res://autoloads/shake.gd"
+Items="*res://autoloads/items.gd"
+Effects="*res://autoloads/effects.gd"
 
 [display]
 

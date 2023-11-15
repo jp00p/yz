@@ -1,3 +1,7 @@
 res://ui
-res://graphics/shaders
+res://
+res://objects/effects
 res://autoloads
+res://objects/relics
+res://graphics/spell_animations
+res://graphics/shaders

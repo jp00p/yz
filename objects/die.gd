@@ -24,8 +24,6 @@ var visual_only = false
 var element_colors = {}
 var test_prefixes = ["Jagged", "Pure", "None"]
 
-var active = true
-
 func _ready():
     custom_minimum_size = die_size
     visible = false
@@ -41,7 +39,6 @@ func _ready():
     draw_face()
 
     if visual_only:
-        active = false
         mouse_filter = Control.MOUSE_FILTER_IGNORE
         visible = true
         numerals.visible = true
@@ -50,6 +47,8 @@ func reset():
     # reset this die to it's unrolled state
     value = 0
     has_rolled = false
+    locked = false
+    held = false
     unlock()
 
 func get_center():
@@ -145,6 +144,7 @@ func roll():
 
 func put_away():
     visible = false
+    self.reset()
 
 func toggle_held():
   if has_rolled and !locked and holder is Player:
@@ -164,7 +164,7 @@ func set_held(val):
     if held:
         border.border_color = Color("Red")
     else:
-        border.border_color = Color("White")
+        border.border_color = Color("Black")
 
 func lock():
   self.locked = true
@@ -173,6 +173,6 @@ func unlock():
   self.locked = false
 
 func _on_gui_input(event):
-  if !visual_only and event is InputEventMouseButton and active:
-    if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-        self.held = !held
+    if !visual_only and !locked and holder == Globals.player:
+        if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+            self.held = !held

@@ -1,20 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://h7pij6oul2pv"]
+[gd_scene load_steps=8 format=3 uid="uid://h7pij6oul2pv"]
 
 [ext_resource type="Texture2D" uid="uid://m1b7ar3yj0cr" path="res://graphics/ui/mask.png" id="1_7pysg"]
-[ext_resource type="Shader" path="res://graphics/shaders/desat.gdshader" id="1_ygo13"]
+[ext_resource type="Shader" path="res://graphics/shaders/dissolve.gdshader" id="1_jlwmd"]
 [ext_resource type="Script" path="res://ui/bg_frame.gd" id="2_2jqwd"]
 [ext_resource type="Texture2D" uid="uid://b5ywnspifq0uo" path="res://graphics/ui/backgrounds/castle pack5.png" id="4_nu43d"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ehtpj"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2tj8h"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uarkt"]
-shader = ExtResource("1_ygo13")
-shader_parameter/saturation = 0.33
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k2etk"]
+noise = SubResource("FastNoiseLite_2tj8h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x6f1n"]
+shader = ExtResource("1_jlwmd")
+shader_parameter/dissolve_value = 0.513
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_k2etk")
 
 [node name="BGFrame" type="TextureRect"]
-clip_children = 2
+clip_children = 1
 texture_filter = 1
-material = SubResource("ShaderMaterial_ehtpj")
 clip_contents = true
 custom_minimum_size = Vector2(818, 613)
 anchors_preset = 8
@@ -35,8 +38,9 @@ script = ExtResource("2_2jqwd")
 
 [node name="Image" type="TextureRect" parent="."]
 unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.541176)
 texture_filter = 1
-material = SubResource("ShaderMaterial_uarkt")
+material = SubResource("ShaderMaterial_x6f1n")
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.065

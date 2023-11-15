@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Effect" load_steps=2 format=3 uid="uid://dc1yipbyhddtt"]
+
+[ext_resource type="Script" path="res://resources/effect.gd" id="1_eyhuu"]
+
+[resource]
+script = ExtResource("1_eyhuu")
+effect = 0
+effect_parameters = "x.score"

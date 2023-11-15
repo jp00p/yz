@@ -7,6 +7,7 @@ extends PanelContainer
 @onready var portrait = %Portrait
 
 var entity:Entity = null
+var shake = 0
 
 func _ready():
     if is_instance_valid(entity):
@@ -23,6 +24,7 @@ func update_health():
     var health_percent = float(entity.hp) / float(entity.max_hp)
     health_bar.value = health_percent
     health_value.text = "%s / %s" % [entity.hp, entity.max_hp]
+
 
 func update_block():
     print("Updating block UI")

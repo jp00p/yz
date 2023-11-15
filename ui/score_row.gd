@@ -15,7 +15,7 @@ var score = 0
 var lines = []
 
 func _ready():
-    Globals.set_score.connect(set_score)
+    SignalBus.set_score.connect(set_score)
     styles = StyleBoxFlat.new()
     styles.bg_color = Color(0,0,0,0.0)
     add_theme_stylebox_override("panel", styles)

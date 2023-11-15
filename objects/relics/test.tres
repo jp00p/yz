@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://cwxhnr8rljete"]
+
+[ext_resource type="Script" path="res://resources/item.gd" id="1_6xv6p"]
+
+[resource]
+script = ExtResource("1_6xv6p")
+item_name = "Super amazing relic"
+item_description = ""
+effect_target = {
+"ENEMY": 1,
+"PLAYER": 0
+}
+effect_trigger = 0
+effect_duration = 0

@@ -6,10 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://h7pij6oul2pv" path="res://ui/bg_frame.tscn" id="4_id43j"]
 [ext_resource type="Texture2D" uid="uid://c1bkjr3746qgi" path="res://graphics/ui/map.png" id="4_spljq"]
 [ext_resource type="Shader" path="res://graphics/shaders/dissolve.gdshader" id="6_4td76"]
-[ext_resource type="PackedScene" uid="uid://bngvyy454ernd" path="res://ui/entity_stats.tscn" id="7_l7442"]
-[ext_resource type="PackedScene" uid="uid://nl7gqbw6gk2r" path="res://ui/dice_tray.tscn" id="9_p7f3v"]
-[ext_resource type="PackedScene" uid="uid://bxdwbck6esp2h" path="res://ui/roll_button.tscn" id="10_qogdd"]
-[ext_resource type="PackedScene" uid="uid://bbgnh5sgaws3u" path="res://ui/spellbook.tscn" id="11_tdeg8"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ucb7n"]
 load_path = "res://.godot/imported/map.png-b48820b9ccb2d144c6df33a9dff6a0a6.ctex"
@@ -28,7 +24,7 @@ noise = SubResource("FastNoiseLite_w3rkp")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x4v2s"]
 shader = ExtResource("6_4td76")
-shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_value = 0.0
 shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_hmsap")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eo82c"]
@@ -37,7 +33,61 @@ shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_hmsap")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jm0qe"]
 
+[sub_resource type="Animation" id="Animation_5jxja"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainPanel/MainGame/PanelContainer/Elements:material:shader_parameter/dissolve_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_6u0et"]
+resource_name = "hide_elements"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainPanel/MainGame/PanelContainer/Elements:material:shader_parameter/dissolve_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_m1lp5"]
+resource_name = "show_elements"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainPanel/MainGame/PanelContainer/Elements:material:shader_parameter/dissolve_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7eeqa"]
+_data = {
+"RESET": SubResource("Animation_5jxja"),
+"hide_elements": SubResource("Animation_6u0et"),
+"show_elements": SubResource("Animation_m1lp5")
+}
+
 [node name="Main" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -91,10 +141,11 @@ theme = ExtResource("1_mc8s4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_o1vc1")
 
 [node name="BGFrame" parent="MainPanel/MainGame/PanelContainer" instance=ExtResource("4_id43j")]
+unique_name_in_owner = true
 layout_mode = 2
-opacity = 0.3
 
 [node name="Elements" type="MarginContainer" parent="MainPanel/MainGame/PanelContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_x4v2s")
 layout_mode = 2
 theme_override_constants/margin_left = 64
@@ -113,9 +164,6 @@ size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxEmpty_eo82c")
 metadata/_edit_use_anchors_ = true
 
-[node name="EntityStats" parent="MainPanel/MainGame/PanelContainer/Elements/PlayerUI" groups=["DebugUI"] instance=ExtResource("7_l7442")]
-layout_mode = 2
-
 [node name="EventUI" type="PanelContainer" parent="MainPanel/MainGame/PanelContainer/Elements"]
 unique_name_in_owner = true
 texture_filter = 1
@@ -133,16 +181,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxEmpty_jm0qe")
 
-[node name="DiceTray" parent="MainPanel/MainGame/PanelContainer/Elements/DiceUI" groups=["DebugUI"] instance=ExtResource("9_p7f3v")]
-layout_mode = 2
-debug = true
-
 [node name="RollButtonUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
-
-[node name="RollButton" parent="RollButtonUI" groups=["DebugUI"] instance=ExtResource("10_qogdd")]
 
 [node name="SpellbookUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
-[node name="Spellbook" parent="SpellbookUI" instance=ExtResource("11_tdeg8")]
+[node name="InterfaceAnimations" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7eeqa")
+}

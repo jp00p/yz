@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbcpjee0q8jl5"]
+
+[ext_resource type="Script" path="res://ui/map.gd" id="1_pnc1k"]
+
+[node name="Map" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("1_pnc1k")

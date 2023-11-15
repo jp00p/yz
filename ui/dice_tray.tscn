@@ -62,8 +62,9 @@ use_parent_material = true
 position = Vector2(166, 158)
 gizmo_extents = 25.0
 
-[node name="DiceHolder" type="Node2D" parent="DiceArena"]
+[node name="DiceHolder" type="Control" parent="DiceArena"]
 unique_name_in_owner = true
+anchors_preset = 0
 
 [node name="RollLabel" type="Label" parent="DiceArena"]
 unique_name_in_owner = true

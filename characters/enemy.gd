@@ -24,7 +24,7 @@ func assign_name(new_name) -> Enemy:
 func set_hp(val):
     super(val)
     if hp <= 0:
-        Globals.enemy_died.emit()
+        SignalBus.enemy_died.emit()
 
 func attack(target:Entity):
     # roll dice

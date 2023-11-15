@@ -1,13 +1,13 @@
 extends Node2D
 
-const plane_len = 30
+const plane_len = 25
 const node_count = plane_len * plane_len / 12
 const path_count = 8
 
-const map_scale = 20.0
+const map_scale = 18.0
 
 var events = {}
-var event_scene = preload("res://event.tscn")
+var event_scene = preload("res://map_testing/event.tscn")
 
 func _ready():
     var generator = preload("res://objects/map_generator.gd").new()
@@ -27,7 +27,7 @@ func _ready():
             events[index1].add_child_event(events[index2])
 
 
-func _on_control_gui_input(event):
+func _input(event):
     if event is InputEventMouseButton:
         if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
             get_tree().reload_current_scene()

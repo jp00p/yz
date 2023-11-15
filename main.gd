@@ -11,12 +11,13 @@ extends Control
 @onready var combat_panel = preload("res://ui/combat.tscn")
 @onready var dice_tray = preload("res://ui/dice_tray.tscn")
 
+@onready var all_elements = %Elements
 @onready var event_ui = %EventUI
 @onready var player_ui = %PlayerUI
 @onready var dice_ui = %DiceUI
 @onready var roll_button_ui = %RollButtonUI
 @onready var spellbook_ui = %SpellbookUI
-
+@onready var background = %BGFrame
 
 enum GAME_STATE {
     BATTLE_BEGIN,
@@ -33,7 +34,6 @@ enum GAME_STATE {
 }
 
 var state = null
-var all_dice = []
 
 var player:Player = null
 var current_event = null
@@ -42,30 +42,53 @@ var player_dice_tray = null
 var player_roll_button = null
 
 var player_shake = 0
-var player_shake_mag = 10
-#var player_pos = Vector2.ZERO
 var player_default_pos = Vector2.ZERO
 
 var event_shake = 0
-#var event_pos = Vector2.ZERO
 var event_default_pos = Vector2.ZERO
-var shake_happened = false
 
 func _ready():
-    get_tree().call_group("DebugUI", "queue_free")
+    hide_starting_elements()
     load_player()
-    Globals.shake_panel.connect(shake_ui)
-    Globals.reset_panels.connect(reset_shake)
-    Globals.create_floating_text.connect(add_floating_text_ui)
-    Globals.add_dice_tray.connect(create_dice_tray)
+    SignalBus.shake_panel.connect(shake_ui)
+    SignalBus.reset_panels.connect(reset_shake)
+    SignalBus.create_floating_text.connect(add_floating_text_ui)
+    SignalBus.add_dice_tray.connect(create_dice_tray)
     player_default_pos = player_ui.global_position
     event_default_pos = event_ui.global_position
+    await get_tree().create_timer(2).timeout
     set_state(GAME_STATE.COMBAT)
+    show_all_elements()
+
+func hide_starting_elements():
+    get_tree().call_group("DebugUI", "queue_free")
+    roll_button_ui.visible = false
+    all_elements.visible = false
+    background.visible = false
+    player_ui.visible = false
+    set_bg_shader_dissolve(0.0)
+    set_elements_shader_dissolve(0.0)
+
+func show_all_elements():
+    all_elements.visible = true
+    background.visible = true
+    player_ui.visible = true
+    var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT_IN)
+    tween.tween_method(set_bg_shader_dissolve, 0.0, 1.0, 0.5)
+    tween.tween_method(set_elements_shader_dissolve, 0.0, 1.0, 1.0)
+    return tween
+
+func set_bg_shader_dissolve(val:float):
+    (background.image.material as ShaderMaterial).set_shader_parameter("dissolve_value", val)
+
+func set_elements_shader_dissolve(val:float):
+    (all_elements.material as ShaderMaterial).set_shader_parameter("dissolve_value", val)
 
 func set_state(new_state=null):
     state = new_state
     player_default_pos = player_ui.global_position
     event_default_pos = event_ui.global_position
+
     match state:
         GAME_STATE.WAITING_TO_MOVE:
             pass
@@ -124,10 +147,17 @@ func start_new_combat(enemy_name=""):
     new_combat.disable_player_input.connect(disable_player_input)
     new_combat.enemy_turn_complete.connect(enemy_turn_complete)
     new_combat.player_turn_complete.connect(player_turn_complete)
+    new_combat.combat_complete.connect(show_battle_complete)
     event_ui.add_child(new_combat)
     current_event = new_combat
+    await show_all_elements().finished
+    roll_button_ui.visible = true
 
 func show_battle_complete():
+    for n in event_ui.get_children():
+        n.queue_free()
+    for n in dice_ui.get_children():
+        n.queue_free()
     var battle_complete = popup.instantiate()
     battle_complete.popup_closed.connect(show_next_level_options)
     add_child(battle_complete)
@@ -166,6 +196,7 @@ func load_player():
 
 func show_player_spells():
     Globals.spellbook.enable()
+
 
 func add_floating_text_ui(floating_text:FloatingText):
     $Floaters.add_child(floating_text)
